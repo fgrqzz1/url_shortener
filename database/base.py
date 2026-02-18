@@ -11,7 +11,7 @@ Base = declarative_base()
 
 engine = create_engine(
     config.database_url,
-    echo=confog.debug,
+    echo=config.debug,
     future=True,
     connect_args={"check_same_thread": False} if config.database_engine == "sqlite3" else {}, 
 )

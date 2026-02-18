@@ -44,7 +44,10 @@ def create_link(db: Session, link_in: LinkCreate) -> Link:
 
 def list_links(db: Session, limit: int = 100, offset = 0) -> list[Link]:
     stmt = (
-        select(Link).order_by(Link.id_desc()).limit(limit).offset(offset)
+        select(Link)
+        .order_by(Link.id.desc())
+        .limit(limit)
+        .offset(offset)
     )
     result = db.execute(stmt)
     

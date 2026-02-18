@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 import secrets
 
 from sqlalchemy.orm import Session
@@ -41,3 +41,25 @@ def create_link(db: Session, link_in: LinkCreate) -> Link:
     db.refresh(db_link)
     
     return db_link
+
+def list_links(db: Session, limit: int = 100, offset = 0) -> list[Link]:
+    stmt = (
+        selecet(link).order_by(Link.id_desc())
+        .limit(limit).offset(offset)
+    )
+    result = db.execute(stmt)
+    
+    return list(result.scalars().all())
+
+def soft_delete_link(db: Session, short_code: str) -> Optional[Link]:
+    link = get_link_by_short_code(db, short_code)
+    if not link:
+        return None
+
+    link.is_active = False
+    db.add(link)
+    db.commit()
+    db.refresh(link)
+
+    return link
+    

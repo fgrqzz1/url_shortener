@@ -18,7 +18,7 @@ class Link(Base):
     is_active = Column(Boolean, nullable=False, default=True)
     click_count = Column(Integer, nullable=False, default=0)
 
-    created_at = Column(DataTime(timezone=True), server_default=func.now(), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     __table_args__ = (Index("idx_links_short_code_active", "short_code", "is_active"))
 

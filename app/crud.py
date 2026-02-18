@@ -44,8 +44,7 @@ def create_link(db: Session, link_in: LinkCreate) -> Link:
 
 def list_links(db: Session, limit: int = 100, offset = 0) -> list[Link]:
     stmt = (
-        selecet(link).order_by(Link.id_desc())
-        .limit(limit).offset(offset)
+        select(Link).order_by(Link.id_desc()).limit(limit).offset(offset)
     )
     result = db.execute(stmt)
     
@@ -62,4 +61,3 @@ def soft_delete_link(db: Session, short_code: str) -> Optional[Link]:
     db.refresh(link)
 
     return link
-    

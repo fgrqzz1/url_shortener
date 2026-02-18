@@ -66,9 +66,7 @@ def soft_delete_link(db: Session, link_id: int) -> Optional[Link]:
     if not link:
         return None
 
-    link.is_active = False
-    db.add(link)
+    db.delete(link)
     db.commit()
-    db.refresh(link)
 
     return link

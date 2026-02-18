@@ -538,7 +538,7 @@ textarea:focus {
   color: rgba(148, 163, 184, 0.9);
   font-size: 12px;
   line-height: 1;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;

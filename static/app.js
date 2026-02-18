@@ -174,28 +174,19 @@ async function loadHistory() {
         loadStats(link.id);
       });
 
-      // крестик: если ссылка ещё активна — сначала отключаем в бэке, потом убираем из списка;
-      // если уже отключена — просто убираем из списка
-      if (!isActive) {
-        dismissBtn.style.display = "flex";
-      }
-
       dismissBtn.addEventListener("click", async (event) => {
         event.stopPropagation();
-        if (isActive) {
-          try {
-            const res = await fetch(`${apiBase}/links/${link.id}`, {
-              method: "DELETE",
-            });
-            if (!res.ok && res.status !== 404) {
-              showError("Не удалось отключить ссылку.");
-              return;
-            }
-            isActive = false;
-          } catch {
-            showError("Ошибка сети при отключении ссылки.");
+        try {
+          const res = await fetch(`${apiBase}/links/${link.id}`, {
+            method: "DELETE",
+          });
+          if (!res.ok && res.status !== 404) {
+            showError("Не удалось удалить ссылку.");
             return;
           }
+        } catch {
+          showError("Ошибка сети при удалении ссылки.");
+          return;
         }
         hiddenLinkIds.add(link.id);
         wrapper.remove();

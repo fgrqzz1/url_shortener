@@ -3,7 +3,7 @@ from time import timezone
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Index, true
 from sqlalchemy.sql import func
 
-from app.database import Base
+from database.base import Base
 
 
 class Link(Base):

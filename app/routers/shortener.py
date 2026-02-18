@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
-from database.connection import get_db
+from database import get_db
 from app import crud
 from app.schemas import LinkCreate, LinkRead, LinkStats
 
@@ -12,12 +12,12 @@ router = APIRouter(
 )
 
 
-@router.post('/links', response_model=LinkRead, status_code=statud.HTTP_201_CREATED)
-def create_link(link_in: LinkCreate, db: Session = Depends (get_db)):
+@router.post('/links', response_model=LinkRead, status_code=status.HTTP_201_CREATED)
+def create_link(link_in: LinkCreate, db: Session = Depends(get_db)):
     db_link = crud.create_link(db, link_in)
     return db_link
 
-@router.get(f'/links/{short_code}', response_model=LinkStats)
+@router.get('/links/{short_code}', response_model=LinkStats)
 def get_links_stats(short_code: str, db: Session = Depends(get_db)):
     link = crud.get_link_by_short_code(db, short_code)
     if not link:

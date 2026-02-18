@@ -16,6 +16,14 @@ def get_link_by_short_code(db: Session, short_code: str) -> Optional[Link]:
     return db.execute(stmt).scalar_one_or_none()
 
 
+def get_link_by_id(db: Session, link_id: int) -> Optional[Link]:
+    stmt = select(Link).where(
+        Link.id == link_id,
+        Link.is_active.is_(True),
+    )
+    return db.execute(stmt).scalar_one_or_none()
+
+
 def increment_click_count(db: Session, link: Link) -> None:
     link.click_count += 1
     db.add(link)
@@ -50,11 +58,11 @@ def list_links(db: Session, limit: int = 100, offset = 0) -> list[Link]:
         .offset(offset)
     )
     result = db.execute(stmt)
-    
+
     return list(result.scalars().all())
 
-def soft_delete_link(db: Session, short_code: str) -> Optional[Link]:
-    link = get_link_by_short_code(db, short_code)
+def soft_delete_link(db: Session, link_id: int) -> Optional[Link]:
+    link = get_link_by_id(db, link_id)
     if not link:
         return None
 

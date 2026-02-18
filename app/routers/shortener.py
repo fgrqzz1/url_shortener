@@ -42,3 +42,17 @@ def redirect_short_code(short_code: str, db: Session = Depends(get_db)):
 
     crud.increment_click_count(db, link)
     return RedirectResponse(url=link.long_url, status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+
+@router.get('/links', response_model=list[LinkRead])
+def list_links(limit: int = 100, offset: int = 0, db: Session = Depends(get_db)):
+    links = crud.list_links(db, limit=limit, offset=offset)
+    return links
+
+@router.delete('/links/{short_code}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_link(short_code: str, db: Session = Depends(get_db)):
+    link = crud.soft_delete_link(db, short_code)
+    if not link:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail='Link not found',
+        )

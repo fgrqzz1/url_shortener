@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>URL Shortener — Сократи ссылку красиво</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="background">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="noise-layer"></div>
+    </div>
+
+    <main class="page">
+      <header class="header">
+        <div class="logo">
+          <span class="logo-mark">⦿</span>
+          <span class="logo-text">URL Shortener</span>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            Сокращай ссылки
+            <span class="hero-gradient">стильно и быстро</span>
+          </h1>
+        </div>
+
+        <div class="card card-main" id="shortener-card">
+          <div class="card-header">
+            <h2>Создать короткую ссылку</h2>
+            <span class="status-pill" id="status-pill">Готов к работе</span>
+          </div>
+
+          <form class="form" id="shorten-form">
+            <label class="field">
+              <span class="field-label">Длинный URL</span>
+              <div class="field-input-wrapper">
+                <input
+                  id="long-url"
+                  type="url"
+                  required
+                  placeholder="https://длинный‑длинный‑url, который хочется сократить..."
+                />
+                <button type="submit" class="btn btn-primary" id="shorten-btn">
+                  Сократить
+                </button>
+              </div>
+              <span class="field-help">
+                Поддерживаются любые HTTPS‑ссылки. Валидация выполняется на
+                бэкенде.
+              </span>
+            </label>
+
+            <label class="field">
+              <span class="field-label">
+                Описание
+                <span class="field-label-muted">(опционально)</span>
+              </span>
+              <textarea
+                id="description"
+                rows="2"
+                placeholder="Например: «Промо‑страница кампании» — только для вас, не появляется в самом URL."
+              ></textarea>
+            </label>
+          </form>
+
+          <div class="divider"></div>
+
+          <div class="result" id="result" hidden>
+            <div class="result-label">Новая короткая ссылка</div>
+            <div class="result-value">
+              <a href="#" target="_blank" rel="noopener" id="short-url"></a>
+              <button class="btn-icon" id="copy-btn" title="Скопировать">
+                <span class="icon-copy"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="result result-error" id="error" hidden>
+            <div class="result-label">Ошибка</div>
+            <div class="result-meta" id="error-message"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid" id="features">
+        <div class="card card-secondary" id="history">
+          <div class="card-header">
+            <h3>Последние ссылки</h3>
+            <button class="btn-ghost" id="refresh-history">Обновить</button>
+          </div>
+          <div class="history-empty" id="history-empty">
+            Пока нет сохранённых ссылок. Создайте первую — и она появится здесь.
+          </div>
+          <div class="history-list" id="history-list"></div>
+        </div>
+
+        <div class="card card-secondary" id="stats">
+          <h3>Статистика переходов</h3>
+          <p>
+            Выберите ссылку из истории, чтобы увидеть количество переходов и
+            статус активности. Обновление статистики — в реальном времени.
+          </p>
+          <div class="stats" id="stats-panel">
+            <div class="stats-item">
+              <span class="stats-label">Переходов</span>
+              <span class="stats-value" id="stats-clicks">—</span>
+            </div>
+            <div class="stats-item">
+              <span class="stats-label">Статус</span>
+              <span class="stats-value" id="stats-status">—</span>
+            </div>
+            <div class="stats-item">
+              <span class="stats-label">Оригинальный URL</span>
+              <span class="stats-value stats-url" id="stats-url">—</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-content">
+          <span class="footer-line">Разработчик Grachev Yaroslav</span>
+          <span class="footer-line">
+            tg:
+            <a href="https://t.me/grachev_yk" target="_blank" rel="noopener" class="footer-link">
+              @grachev_yk
+            </a>
+          </span>
+        </div>
+      </footer>
+    </main>
+
+    <script src="/static/app.js" type="module"></script>
+  </body>
+</html>
+

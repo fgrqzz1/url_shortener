@@ -1,0 +1,2 @@
+# Исключить JS из статистики языков (GitHub Linguist)
+static/app.js linguist-vendored

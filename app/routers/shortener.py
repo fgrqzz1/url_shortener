@@ -21,13 +21,16 @@ def create_link(link_in: LinkCreate, db: Session = Depends(get_db)):
 def get_links_stats(short_code: str, db: Session = Depends(get_db)):
     link = crud.get_link_by_short_code(db, short_code)
     if not link:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Link not found"
+        )
     
     return LinkStats(
         short_code=link.short_code,
-        long_url = link.long_url,
-        click_count = link.click_count,
-        is_active = link.is_active,
+        long_url=link.long_url,
+        click_count=link.click_count,
+        is_active=link.is_active,
     )
 
 

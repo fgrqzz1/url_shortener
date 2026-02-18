@@ -51,9 +51,14 @@ class Configuration:
         # todo: в переменную окружения
         self.secret_key = os.getenv('SECRET_KEY', self.cfg['app'].get('secret_key', 'dev-secret-key'))
 
-        url_section = self.cfg.get('url', {})
+        # секция с настройками коротких ссылок может отсутствовать
+        if self.cfg.has_section('url'):
+            url_section = self.cfg['url']
+        else:
+            url_section = {}
+
         self.default_short_code_length = int(
-            os.getenv('SHORT_CODE_LENGTH', url_section.get('default_length', '6'))
+            os.getenv('SHORT_CODE_LENGTH', url_section.get('default_length', '6') if url_section else '6')
         )
     def __getattr__(self, name):
         if self.cfg is None:
